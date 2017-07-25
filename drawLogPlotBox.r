@@ -3,23 +3,34 @@ drawLogPlotBox <-function(xlimits=c(1E-10,1E-11), ylimits=c(1E2,1E3),
                           xlabel="x axis", ylabel="y axis",
                           x2label="", y2label="",
                           naxes=c(T,T,F,F)){
-  # draw a plot box with logarithmic axes
-  # xlimits: vector with X axis limits (axis=1)
-  # ylimits: vector with Y axis limits (axis=2)
-  # x2limits: vector with X2 axis limits (axis=3)
-  # y2limits: vector with Y2 axis limits (axis=4)
-  # logxy: string specifying which axes should be plotted in log scale:
-  #        logxy="x" -> X axis
-  #        logxy="y" -> Y axis
-  #        logxy="xy" -> X and Y axes
-  # xlabel: label for X axis
-  # ylabel: label for Y axis
-  # x2label: label for X2 axis
-  # y2label: label for Y2 axis
-  # naxes: logical vector with "T" for the axis number to be plotted 
-  #       (i.e.:  c(TRUE,TRUE,TRUE,TRUE) will draw the four axes, while
-  #               c(TRUE,TRUE,FALSE,FALSE) will draw only X (bottom) and
-  #               Y (left) axes). By default, all four axes will be plotted.
+      # draw a plot box with logarithmic axes
+      # xlimits: vector with X axis limits (axis=1)
+      # ylimits: vector with Y axis limits (axis=2)
+      # x2limits: vector with X2 axis limits (axis=3)
+      # y2limits: vector with Y2 axis limits (axis=4)
+      # logxy: string specifying which axes should be plotted in log scale:
+      #        logxy="x" -> X axis
+      #        logxy="y" -> Y axis
+      #        logxy="xy" -> X and Y axes
+      # xlabel: label for X axis
+      # ylabel: label for Y axis
+      # x2label: label for X2 axis
+      # y2label: label for Y2 axis
+      # naxes: logical vector with "T" for the axis number to be plotted 
+      #       (i.e.:  c(TRUE,TRUE,TRUE,TRUE) will draw the four axes, while
+      #               c(TRUE,TRUE,FALSE,FALSE) will draw only X (bottom) and
+      #               Y (left) axes). By default, all four axes will be plotted.
+    
+    getPowerTenLab <- function(expo){
+        if(expo == 0){
+            powLab <- "1"
+        }else if(expo == 1){
+            powLab <- "10"
+        }else{
+            powLab <- as.expression(bquote(10^.(expo)))
+        }
+        return(powLab)
+    }    
     
   # draw plot box with no axes
   # ==========================
@@ -38,8 +49,8 @@ drawLogPlotBox <-function(xlimits=c(1E-10,1E-11), ylimits=c(1E2,1E3),
     xmjtlabs<-c()
     xmnt<-c()
     for (expo in expseq){
-      xmjtlabs<-append(xmjtlabs,as.expression(bquote(10^.(expo))))
-      xmnt<-append(xmnt,seq(2,9)*10**expo)
+        xmjtlabs<-append(xmjtlabs,getPowerTenLab(expo))
+        xmnt<-append(xmnt,seq(2,9)*10**expo)
     }
     axis(1,at=xmjt,labels=xmjtlabs,las=1,col.axis="black")
     axis(1,at=xmnt,tcl=-0.2,labels=FALSE,col.axis="white")
@@ -50,7 +61,7 @@ drawLogPlotBox <-function(xlimits=c(1E-10,1E-11), ylimits=c(1E2,1E3),
             xmjtlabs<-c()
             xmnt<-c()
             for (expo in expseq){
-                xmjtlabs<-append(xmjtlabs,as.expression(bquote(10^.(expo))))
+                xmjtlabs<-append(xmjtlabs,getPowerTenLab(expo))
                 xmnt<-append(xmnt,seq(2,9)*10**expo)
             }  
             xmnt <- xmnt *xlimits[1]/x2limits[1]
@@ -74,7 +85,7 @@ drawLogPlotBox <-function(xlimits=c(1E-10,1E-11), ylimits=c(1E2,1E3),
     ymjtlabs<-c()
     ymnt<-c()
     for (expo in expseq){
-      ymjtlabs<-append(ymjtlabs,as.expression(bquote(10^.(expo))))
+      ymjtlabs<-append(ymjtlabs,getPowerTenLab(expo))
       ymnt<-append(ymnt,seq(2,9)*10**expo)
     }
     
@@ -87,7 +98,7 @@ drawLogPlotBox <-function(xlimits=c(1E-10,1E-11), ylimits=c(1E2,1E3),
             ymjtlabs<-c()
             ymnt<-c()
             for (expo in expseq){
-                ymjtlabs<-append(ymjtlabs,as.expression(bquote(10^.(expo))))
+                ymjtlabs<-append(ymjtlabs,getPowerTenLab(expo))
                 ymnt<-append(ymnt,seq(2,9)*10**expo)
             }
             ymnt <- ymnt *ylimits[1]/y2limits[1]
