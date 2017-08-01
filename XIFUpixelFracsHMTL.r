@@ -91,7 +91,11 @@
                         N.IQ.photons <- N.IQ.photons +1
                     }
                 }else{
-                    if((points[i]-points[i-1])>t0 && (points[i+1]-points[i])>t3){  # HQ
+                    if((points[i+1]-points[i])<tolsep && (points[i]-points[i-1])>tolsep){
+                        N.P1L.photons <- N.P1L.photons +1     # P1L
+                    }else if((points[i]-points[i-1])<tolsep){
+                        N.P2L.photons <- N.P2L.photons +1     # P2L
+                    }else if((points[i]-points[i-1])>t0 && (points[i+1]-points[i])>t3){  # HQ
                         N.HQ.photons <- N.HQ.photons +1 
                     }else if((points[i]-points[i-1])>t0 && (points[i+1]-points[i])>t2 && 
                              (points[i+1]-points[i])<t3){  # MQ
@@ -102,12 +106,6 @@
                     }else if((points[i]-points[i-1])>t0 && ((points[i+1]-points[i])<t1) &&
                              (points[i+1]-points[i])>tolsep){ # LQ
                         N.LQ.photons <- N.LQ.photons +1
-                    }else if((points[i+1]-points[i])<tolsep && (points[i]-points[i-1])>tolsep){
-                        N.P1L.photons <- N.P1L.photons +1     # P1L
-                    }else if((points[i]-points[i-1])<tolsep){
-                        N.P2L.photons <- N.P2L.photons +1     # P2L
-                    #}else if((points[i+1]-points[i])<tolsep || (points[i]-points[i-1])<tolsep){
-                    #    N.PL.photons <- N.PL.photons +1  
                     }else{                          # IQ
                         N.IQ.photons <- N.IQ.photons +1
                     }
